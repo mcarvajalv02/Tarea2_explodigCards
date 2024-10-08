@@ -4,20 +4,27 @@ import { Card } from "./cards.js";
 let deck = [];
 const globalDiv = document.createElement("div");
 const buttonElement = document.createElement("button");
+const buttonElementReset = document.createElement("button");
 const divElement = document.createElement("div");
-const nameCard = document.createElement("h2");
+const nameCard = document.createElement("span");
 const imgPoint = document.createElement("img");
 const imgBomb = document.createElement("img");
+const imgDefuse = document.createElement("img");
+const imgSkiptTurn = document.createElement("img");
+const imgNope = document.createElement("img");
 
 imgPoint.src = "src/img/point.png";
 imgBomb.src = "src/img/bomb.png";
+imgDefuse.src = "src/img/defuse.png";
+imgSkiptTurn.src = "src/img/skipTurn.png";
+imgNope.src = "src/img/nope.png";
 
 divElement.id = "underContainer";
-divElement.appendChild(nameCard); // Añadimos nameCard a divElement
+globalDiv.appendChild(nameCard); // Añadimos nameCard a divElement
 
 globalDiv.id = "container";
 buttonElement.id = "stealButton";
-buttonElement.textContent = "Robar Carta";
+buttonElement.textContent = "Draw";
 globalDiv.appendChild(divElement);
 globalDiv.appendChild(buttonElement);
 document.body.appendChild(globalDiv);
@@ -62,40 +69,108 @@ function stealCards() {
     displayStolenCard(stolenCard); // Muestra la carta robada
     console.log("Carta robada:", stolenCard);
   } else {
-    console.log("No hay cartas en el mazo");
+    buttonElement.remove();
     nameCard.textContent = "No hay más cartas"; // Mensaje cuando no hay más cartas
+    buttonElementReset.textContent = "Reset";
+    globalDiv.appendChild(buttonElementReset);
+    buttonElementReset.addEventListener("click", resetDeck);
   }
+}
+
+function resetDeck(deck){
+  deck = generateDeck();
+  deck = shuffleCards();
+
+  //Borramos la última carta que ha salido 
+  divElement.innerHTML = '';
+  //Borramos el color de la última carta que ha salido
+  divElement.className = '';
+  nameCard.textContent = "";
+  buttonElementReset.remove();
+  globalDiv.appendChild(buttonElement);
+  return deck;
 }
 
 //Muestro la tarjeta robada
 function displayStolenCard(card) {
-  nameCard.textContent = `${card.type}`;
+  // Limpia el contenido de la carta anterior
+  divElement.innerHTML = '';
+
+  //Borramos el color de la carta anterior
+  divElement.className = '';
+
+  // Crea los elementos para la parte superior de la carta
+  const cardTypeTop = document.createElement("div");
+  cardTypeTop.className = "card-type";
+  cardTypeTop.textContent = `${card.type}`;
   
-  // Si es de tipo POINTS, muestra la imagen
-  if (card.type == "POINTS") {
-    if (!divElement.contains(imgPoint)) {
-      divElement.appendChild(imgPoint);
-      
-      
-    }
-  } else {
-    // Si no es POINTS, asegúrate de quitar la imagen si está presente
-    if (divElement.contains(imgPoint)) {
-      divElement.removeChild(imgPoint);
-    }
+  const cardDescriptionTop = document.createElement("div");
+  cardDescriptionTop.className = "card-description";
+  cardDescriptionTop.textContent = "Descripción de la carta";
+  
+  const cardImage = document.createElement("img");
+  cardImage.className = "card-image";
+  
+  const pointsCard = document.createElement("span");
+  pointsCard.textContent = `${card.value}`;
+  pointsCard.className = "pointsOfCards"
+
+  // Selecciona la imagen correspondiente
+  switch (card.type) {
+      case "POINTS":
+          cardImage.src = imgPoint.src;
+          divElement.appendChild(pointsCard);
+          divElement.classList.add("points-card");
+          break;
+      case "BOMB":
+          cardImage.src = imgBomb.src;
+          divElement.classList.add("bomb-card");
+          break;
+      case "DEFUSE":
+          cardImage.src = imgDefuse.src;
+          divElement.classList.add("defuse-card");
+          break;
+      case "SKIP TURN":
+          cardImage.src = imgSkiptTurn.src;
+          divElement.classList.add("skip-turn-card");
+          break;
+      case "NOPE":
+          cardImage.src = imgNope.src;
+          divElement.classList.add("nope-card");
+          break;
+      default:
+          cardImage.src = ""; // Default image if needed
   }
 
-  if (card.type == "BOMB") {
-    if (!divElement.contains(imgBomb)) {
-      divElement.appendChild(imgBomb);
-    }
-  } else {
-    // Si no es POINTS, asegúrate de quitar la imagen si está presente
-    if (divElement.contains(imgBomb)) {
-      divElement.removeChild(imgBomb);
-    }
-  }
+  //Creo un div donde meto el nombre de la carta y la descripción
+  const divNameDescriptionTop = document.createElement("div");
+  const divNameDescriptionBottom = document.createElement("div");
+
+  // Crea los elementos para la parte inferior de la carta
+  const cardTypeBottom = document.createElement("div");
+  cardTypeBottom.className = "card-type-bottom-text";
+  cardTypeBottom.textContent = `${card.type}`;
+  
+  const cardDescriptionBottom = document.createElement("div");
+  cardDescriptionBottom.className = "card-description-bottom-text";
+  cardDescriptionBottom.textContent = "Descripción de la carta";
+
+  // Añadir los elementos a la tarjeta (parte superior)
+  divNameDescriptionTop.appendChild(cardTypeTop);
+  divNameDescriptionTop.appendChild(cardDescriptionTop);
+  divElement.appendChild(divNameDescriptionTop);
+  divElement.appendChild(cardImage);
+  divNameDescriptionTop.className = "container-name-description-top";
+
+  
+
+  // Añadir los elementos a la tarjeta (parte inferior)
+  divNameDescriptionBottom.appendChild(cardTypeBottom);
+  divNameDescriptionBottom.appendChild(cardDescriptionBottom);
+  divElement.appendChild(divNameDescriptionBottom);
+  divNameDescriptionBottom.className = "container-name-description-bottom";
 }
+
 
 function updateDOM() {
   // Aquí podrías actualizar otros elementos del DOM si es necesario
