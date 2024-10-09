@@ -54,6 +54,7 @@ body{
     left: 0.2rem;
     font-size: 0.6rem;
     color: black;
+    margin-left: 1rem;
 }
 
 .card-description {
@@ -62,6 +63,7 @@ body{
     left: 0.2rem;
     font-size: 0.4rem;
     color: grey;
+    margin-left: 1rem;
 }
 
 .card-image {
@@ -91,6 +93,7 @@ body{
     bottom: 0.5rem;
     transform: rotate(180deg);
     margin-left: auto;
+    margin-bottom: -0.3rem;
 }
 
 .card-description-bottom-text{
@@ -106,6 +109,7 @@ body{
     display: flex;
     flex-direction: column-reverse;
     margin-left: auto;
+    margin-right: 1rem;
 }
 
 .pointsOfCards{
@@ -151,4 +155,21 @@ button{
   transform: translate3d(0, 2px, 0);
 
   box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+}
+
+.corner-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px; 
+    height: 30px;
+}
+  
+.corner-right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 30px; 
+    height: 30px;
+    rotate: 180deg;
 }

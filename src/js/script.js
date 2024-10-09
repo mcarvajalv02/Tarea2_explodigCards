@@ -85,7 +85,7 @@ function resetDeck(deck){
   divElement.innerHTML = '';
   //Borramos el color de la última carta que ha salido
   divElement.className = '';
-  nameCard.textContent = "";
+  nameCard.textContent = '' ;
   buttonElementReset.remove();
   globalDiv.appendChild(buttonElement);
   return deck;
@@ -100,6 +100,12 @@ function displayStolenCard(card) {
   divElement.className = '';
 
   // Crea los elementos para la parte superior de la carta
+  const imgCornerLeftTop = document.createElement("img");
+  const imgCornerRightBottom = document.createElement("img");
+
+  imgCornerLeftTop.className = "corner-left";
+  imgCornerRightBottom.className = "corner-right";
+
   const cardTypeTop = document.createElement("div");
   cardTypeTop.className = "card-type";
   cardTypeTop.textContent = `${card.type}`;
@@ -107,6 +113,10 @@ function displayStolenCard(card) {
   const cardDescriptionTop = document.createElement("div");
   cardDescriptionTop.className = "card-description";
   cardDescriptionTop.textContent = "Descripción de la carta";
+
+  const cardDescriptionBottom = document.createElement("div");
+  cardDescriptionBottom.className = "card-description-bottom-text";
+  cardDescriptionBottom.textContent = "Descripción de la carta";
   
   const cardImage = document.createElement("img");
   cardImage.className = "card-image";
@@ -121,39 +131,69 @@ function displayStolenCard(card) {
           cardImage.src = imgPoint.src;
           divElement.appendChild(pointsCard);
           divElement.classList.add("points-card");
+          cardDescriptionTop.textContent = "When generated, they can have a random value between 1 and 10. If the game ends and more than one player is alive, the one with the most points wins.";
+          cardDescriptionBottom.textContent = "When generated, they can have a random value between 1 and 10. If the game ends and more than one player is alive, the one with the most points wins.";
+
+          imgCornerLeftTop.src = imgPoint.src;
+          imgCornerRightBottom.src = imgPoint.src;
           break;
       case "BOMB":
           cardImage.src = imgBomb.src;
           divElement.classList.add("bomb-card");
+          cardDescriptionTop.textContent = "If you draw one and don't have a Defuse card, you lose.";
+          cardDescriptionBottom.textContent = "If you draw one and don't have a Defuse card, you lose.";
+
+          imgCornerLeftTop.src = imgBomb.src;
+          imgCornerRightBottom.src = imgBomb.src;
           break;
       case "DEFUSE":
           cardImage.src = imgDefuse.src;
           divElement.classList.add("defuse-card");
+          cardDescriptionTop.textContent = "You can keep all the ones you draw in your hand.";
+          cardDescriptionBottom.textContent = "You can keep all the ones you draw in your hand.";
+
+          imgCornerLeftTop.src = imgDefuse.src;
+          imgCornerRightBottom.src = imgDefuse.src;
           break;
       case "SKIP TURN":
           cardImage.src = imgSkiptTurn.src;
           divElement.classList.add("skip-turn-card");
+          cardDescriptionTop.textContent = "They allow you to avoid drawing a card.";
+          cardDescriptionBottom.textContent = "They allow you to avoid drawing a card.";
+
+          imgCornerLeftTop.src = imgSkiptTurn.src;
+          imgCornerRightBottom.src = imgSkiptTurn.src;
           break;
       case "NOPE":
           cardImage.src = imgNope.src;
           divElement.classList.add("nope-card");
+          cardDescriptionTop.textContent = "If an opponent wants to skip a turn, you can cancel it using this card; both are discarded.";
+          cardDescriptionBottom.textContent = "If an opponent wants to skip a turn, you can cancel it using this card; both are disca ded.";
+          
+          imgCornerLeftTop.src = imgNope.src;
+          imgCornerRightBottom.src = imgNope.src;
           break;
       default:
           cardImage.src = ""; // Default image if needed
   }
 
+
+  
+
   //Creo un div donde meto el nombre de la carta y la descripción
   const divNameDescriptionTop = document.createElement("div");
   const divNameDescriptionBottom = document.createElement("div");
+
+  divNameDescriptionTop.appendChild(imgCornerLeftTop);
 
   // Crea los elementos para la parte inferior de la carta
   const cardTypeBottom = document.createElement("div");
   cardTypeBottom.className = "card-type-bottom-text";
   cardTypeBottom.textContent = `${card.type}`;
   
-  const cardDescriptionBottom = document.createElement("div");
-  cardDescriptionBottom.className = "card-description-bottom-text";
-  cardDescriptionBottom.textContent = "Descripción de la carta";
+  
+
+  divNameDescriptionBottom.appendChild(imgCornerRightBottom);
 
   // Añadir los elementos a la tarjeta (parte superior)
   divNameDescriptionTop.appendChild(cardTypeTop);
