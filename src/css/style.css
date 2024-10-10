@@ -3,7 +3,12 @@ html {
 }
 
 body{
-    background: #57cf97;
+    background-image: url(../img/fondo.jpg);
+    background-size: cover; /* Esto asegura que la imagen cubra el área */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-position: center; /* Centra la imagen */
+    height: 100vh; /* Asegúrate de que el cuerpo ocupe toda la altura de la ventana */
+    margin: 0;
 }
 :root {
     --baseFont: 4px;
@@ -80,10 +85,17 @@ body{
 
 #container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-wrap: nowrap;
-    gap: 1rem;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    height: 100vh; 
+    flex-wrap: nowrap; 
+    gap: 1rem; 
+}
+
+.finalPhrase{
+    background-color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .card-type-bottom-text{
