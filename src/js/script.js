@@ -5,7 +5,7 @@ let deck = [];
 const globalDiv = document.createElement("div");
 const buttonElement = document.createElement("button");
 const buttonElementReset = document.createElement("button");
-let divElement = document.createElement("div"); // Cambiamos a 'let' para poder recrear el contenedor
+let divElement = document.createElement("div"); // Changed to 'let' to recreate the container
 const nameCard = document.createElement("span");
 const imgPoint = document.createElement("img");
 const imgBomb = document.createElement("img");
@@ -22,7 +22,7 @@ imgNope.src = "src/img/nope.png";
 nameCard.className = "finalPhrase";
 
 divElement.id = "underContainer";
-globalDiv.appendChild(nameCard); // Añadimos nameCard a divElement
+globalDiv.appendChild(nameCard); // Add nameCard to divElement
 
 globalDiv.id = "container";
 buttonElement.id = "stealButton";
@@ -34,7 +34,7 @@ document.body.appendChild(globalDiv);
 buttonElement.addEventListener("click", stealCards);
 
 function generateDeck() {
-  deck = []; // Limpiamos el mazo anterior
+  deck = []; // Clear the previous deck
   for (let i = 0; i < constant.NUMBER_BOMBS; i++) {
     deck.push(new Card(constant.CARD_TYPES.BOMB));
   }
@@ -68,33 +68,33 @@ deck = shuffleCards();
 
 function stealCards() {
   if (deck.length > 0) {
-    const stolenCard = deck.pop(); // Roba la última carta
-    displayStolenCard(stolenCard); // Muestra la carta robada
-    console.log("Carta robada:", stolenCard);
+    const stolenCard = deck.pop(); // Steal the last card
+    displayStolenCard(stolenCard); // Display the stolen card
+    console.log("Stolen card:", stolenCard);
   } else {
-    // Si no hay más cartas, elimina el botón de Draw y el contenedor de cartas
-    buttonElement.style.display = "none"; // Oculta el botón de Draw
+    // If there are no more cards, remove the Draw button and the card container
+    buttonElement.style.display = "none"; // Hide the Draw button
     nameCard.textContent = "There are no more cards";
 
-    // Muestra el botón de Reset
+    // Show the Reset button
     buttonElementReset.textContent = "Reset";
     globalDiv.appendChild(buttonElementReset);
     buttonElementReset.addEventListener("click", resetDeck);
 
-    // Elimina el contenedor de la carta robada
-    divElement.remove(); // Elimina el contenedor de la carta del DOM
+    // Remove the stolen card container
+    divElement.remove(); // Remove the card container from the DOM
   }
 }
 
 function resetDeck() {
-  // Regeneramos y mezclamos el mazo
+  // Regenerate and shuffle the deck
   deck = generateDeck();
   deck = shuffleCards();
 
-  // Restauramos el botón "Draw" y lo mostramos
-  buttonElement.style.display = "inline-block"; // Vuelve a mostrar el botón Draw
+  // Restore the "Draw" button and show it
+  buttonElement.style.display = "inline-block"; // Show the Draw button again
   
-  // Recreamos el contenedor de cartas y lo volvemos a agregar al DOM
+  // Recreate the card container and add it back to the DOM
   divElement = document.createElement("div");
   divElement.id = "underContainer";
   globalDiv.insertBefore(divElement, buttonElement);
@@ -105,23 +105,23 @@ function resetDeck() {
   console.log("Deck reset:", deck);
 }
 
-// Muestra la tarjeta robada
+// Display the stolen card
 function displayStolenCard(card) {
-  // Limpia el contenido de la carta anterior
+  // Clear the content of the previous card
   divElement.innerHTML = '';
 
-  // Borra el color de la carta anterior
+  // Remove the color of the previous card
   divElement.className = '';
 
-  // Crea los elementos para la parte superior de la carta
+  // Create elements for the top part of the card
   const imgCornerLeftTop = document.createElement("img");
   const imgCornerRightBottom = document.createElement("img");
 
   imgCornerLeftTop.className = "corner-left";
   imgCornerRightBottom.className = "corner-right";
 
-  // Especifica las fuentes de las imágenes para las esquinas
-  imgCornerLeftTop.src = imgPoint.src;  // Puedes cambiar esto dependiendo de la carta
+  // Specify the sources for the corner images
+  imgCornerLeftTop.src = imgPoint.src;  // You can change this depending on the card
   imgCornerRightBottom.src = imgPoint.src;
 
   const cardTypeTop = document.createElement("div");
@@ -130,11 +130,11 @@ function displayStolenCard(card) {
   
   const cardDescriptionTop = document.createElement("div");
   cardDescriptionTop.className = "card-description";
-  cardDescriptionTop.textContent = "Descripción de la carta";
+  cardDescriptionTop.textContent = "Card description";
 
   const cardDescriptionBottom = document.createElement("div");
   cardDescriptionBottom.className = "card-description-bottom-text";
-  cardDescriptionBottom.textContent = "Descripción de la carta";
+  cardDescriptionBottom.textContent = "Card description";
   
   const cardImage = document.createElement("img");
   cardImage.className = "card-image";
@@ -143,7 +143,7 @@ function displayStolenCard(card) {
   pointsCard.textContent = `${card.value}`;
   pointsCard.className = "pointsOfCards";
 
-  // Selecciona la imagen correspondiente
+  // Select the corresponding image
   switch (card.type) {
     case "POINTS":
       cardImage.src = imgPoint.src;
@@ -180,11 +180,11 @@ function displayStolenCard(card) {
       cardImage.src = ""; // Default image if needed
   }
 
-  // Crea los contenedores para nombre y descripción
+  // Create containers for name and description
   const divNameDescriptionTop = document.createElement("div");
   const divNameDescriptionBottom = document.createElement("div");
 
-  divNameDescriptionTop.appendChild(imgCornerLeftTop);  // Agregamos la imagen de la esquina superior izquierda
+  divNameDescriptionTop.appendChild(imgCornerLeftTop);  // Add the top left corner image
   divNameDescriptionTop.appendChild(cardTypeTop);
   divNameDescriptionTop.appendChild(cardDescriptionTop);
   divElement.appendChild(divNameDescriptionTop);
@@ -195,7 +195,7 @@ function displayStolenCard(card) {
   cardTypeBottom.className = "card-type-bottom-text";
   cardTypeBottom.textContent = `${card.type}`;
   
-  divNameDescriptionBottom.appendChild(imgCornerRightBottom); // Agregamos la imagen de la esquina inferior derecha
+  divNameDescriptionBottom.appendChild(imgCornerRightBottom); // Add the bottom right corner image
   divNameDescriptionBottom.appendChild(cardTypeBottom);
   divNameDescriptionBottom.appendChild(cardDescriptionBottom);
   divElement.appendChild(divNameDescriptionBottom);

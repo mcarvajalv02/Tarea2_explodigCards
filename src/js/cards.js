@@ -2,7 +2,7 @@
 export class Card {
   constructor(type, value = null) {
     this.type = type;
-    this.value = value; // Solo las cartas de tipo 'Points' tendrán un valor
+    this.value = value; // Only 'Points' type cards will have a value
   }
 }
 
